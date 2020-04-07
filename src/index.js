@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-import WorkBench from './containers/WorkBench/WorkBench';
+import BasicRoute from './Router/BasicRoute';
 
 ReactDOM.render(
-    <WorkBench />
-    ,
+    <BasicRoute />,
     document.getElementById('root')
 );
 serviceWorker.unregister();
