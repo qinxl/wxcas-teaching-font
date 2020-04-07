@@ -1,6 +1,6 @@
 import React from 'react';
 import { createHashHistory } from 'history';
-import { Form, Input, Button, Card } from 'antd';
+import { Form, Input, Button, Card, message } from 'antd';
 import './style.css';
 
 const userNameRules = [
@@ -9,15 +9,19 @@ const userNameRules = [
 ];
 const pwdRules = [
     { required: true, message: '请输入密码' },
-    { whitespace: true, message: '请输入用户名' },
+    { whitespace: true, message: '请输入密码' },
 ];
 
 function Login() {
     const history = createHashHistory();
     const onFinish = values => {
-        console.log('Success:', values);
-        localStorage.setItem('token', new Date().getMilliseconds);
-        history.push("/home");
+        const { username, password } = values;
+        if (username === 'qinxl' && password === '123456') {
+            localStorage.setItem('token', new Date().getMilliseconds);
+            history.push("/home");
+        } else {
+            message.error("用户名或密码错误，请重新输入！");
+        }
     };
 
     const onFinishFailed = errorInfo => {
