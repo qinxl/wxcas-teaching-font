@@ -2,6 +2,7 @@ import React from 'react';
 import { createHashHistory } from 'history';
 import { Button, Modal, Row, Col } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { POBrowser } from '../../utils/index';
 import './style.css';
 
 const { confirm } = Modal;
@@ -25,15 +26,24 @@ function WorkBench() {
     const intoAdmin = () => {
         history.push("/admin");
     };
+
+    const openWindowModeless = () => {
+        POBrowser.openWindowModeless('http://172.16.30.3/showWord', 'fullscreen=yes;');
+    };
+    const openWindow = () => {
+        POBrowser.openWindow('http://172.16.30.3/showWord', 'fullscreen=yes;');
+    };
     return (
         <div className="home-bg">
-            <Row style={{ width: '1200px', margin: "auto",paddingTop:"100px" }} gutter={[16, 16]}>
-                <Col span={18} style={{ backgroundColor: "#FFFFFF", borderRadius: "4px" }}>主要内容</Col>
+            <Row style={{ width: '1200px', margin: "auto", paddingTop: "100px" }} gutter={[20, 20]}>
+                <Col span={18} style={{ backgroundColor: "#FFFFFF", borderRadius: "4px" }}>
+                    <Button type="primary" onClick={() => { openWindowModeless(); }}>openWindowModeless</Button>
+                    <Button type="primary" onClick={() => { openWindow(); }}>openWindow</Button>
+                    <Button type="primary" onClick={() => { intoAdmin(); }}>进入后台</Button>
+                    <Button type="primary" onClick={() => { quitHandler(); }}>退出系统</Button>
+                </Col>
                 <Col span={6} style={{ backgroundColor: "#FFFFFF", borderRadius: "4px" }}>新增公告</Col>
             </Row>
-            <h1>主页</h1>
-            <Button type="primary" onClick={() => intoAdmin()}>进入后台</Button>
-            <Button type="danger" onClick={() => quitHandler()}>退出登录</Button>
         </div>
     );
 }
