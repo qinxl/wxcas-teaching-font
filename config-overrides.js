@@ -1,5 +1,4 @@
-const { override, fixBabelImports, disableEsLint } = require('customize-cra');
-
+const { override, fixBabelImports, disableEsLint, addDecoratorsLegacy } = require('customize-cra');
 const customPlugins = [];
 
 const rewiredMap = () => config => {
@@ -14,6 +13,8 @@ module.exports = override(
         libraryDirectory: 'es',
         style: 'css',
     }),
+    // 开启装饰器
+    addDecoratorsLegacy(),
     // 关闭 mapSource
     // rewiredMap(),
     // 关闭eslint
