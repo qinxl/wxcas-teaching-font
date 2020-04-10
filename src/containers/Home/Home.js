@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createHashHistory } from 'history';
 import { Button, Modal, Row, Col, Space } from 'antd';
 import { observer, inject } from 'mobx-react';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { POBrowser } from '../../utils/index';
+import { POBrowser, SessionUtil } from '../../utils/index';
 import './style.css';
 
 const { confirm } = Modal;
@@ -44,61 +44,50 @@ const openWindowModeless = () => {
 /**
  * 渲染函数
  */
-function Home({ props, userStore }) {
-  console.log('props', props);
-  console.log('userStore', userStore);
+function Home({ appStore }) {
+  const [realName, setRealName] = useState('');
+  useEffect(() => {
+    appStore.setAppList([
+      { id: 1, label: '数据中心', type: 0, href: '' },
+      { id: 2, label: '训练系统', type: 0, href: '' },
+      { id: 3, label: '任务管理系统', type: 0, href: '' },
+      { id: 4, label: '资源库', type: 0, href: '' },
+      { id: 5, label: '数字化校园', type: 0, href: '' },
+      { id: 6, label: '目标解构工具', type: 1, href: '' },
+      { id: 7, label: 'SWOT分析', type: 1, href: '' },
+      { id: 8, label: '问卷调研', type: 1, href: '' },
+      { id: 9, label: '文档编制', type: 1, href: '' },
+      { id: 10, label: '专家访谈', type: 1, href: '' },
+      { id: 11, label: '建模工具', type: 1, href: '' },
+    ]);
+    setRealName(SessionUtil.getRealName);
+    console.log(SessionUtil.getRealName);
+  }, []);
+
   return (
     <div className='home-bg'>
       <div className='home-content'>
-        <Row style={{}} gutter={18}>
+        <Row gutter={18}>
           <Col span={18} style={{ padding: '20px' }}>
-            <Button
-              type='primary'
-              onClick={() => {
-                openWindowModeless();
-              }}
-            >
-              openWindowModeless
-            </Button>
-            <br />
-            <br />
-            <Space size={10}>
-              <Button
-                type='primary'
-                onClick={() => {
-                  intoAdmin();
-                }}
-              >
-                进入后台
-              </Button>
-              <Button
-                type='primary'
-                onClick={() => {
-                  quitHandler();
-                }}
-              >
-                退出系统
-              </Button>
-            </Space>
-            <br />
-            <br />
-            <Space size={10}>
-              <span>当前数值：{userStore.num}</span>
-              <Button type='primary' onClick={() => userStore.plus()}>
-                加1
-              </Button>
-              <Button type='primary' onClick={() => userStore.minus()}>
-                减1
-              </Button>
-            </Space>
+            <p>当前用户：{realName}</p>
+            <p>业务系统</p>
+            <ul>
+              {appStore.systemAppList.map(app => {
+                return <li key={app.id}>{app.label}</li>;
+              })}
+            </ul>
+            <p>工具系统</p>
+            <ul>
+              {appStore.toolAppList.map(app => {
+                return <li key={app.id}>{app.label}</li>;
+              })}
+            </ul>
           </Col>
-          <Col span={6} style={{ padding: '20px' }}>
-            新增公告
-          </Col>
+          <Col span={6} style={{ padding: '20px' }}></Col>
         </Row>
       </div>
     </div>
   );
 }
 
-export default inject('userStore')(observer(Home));
+export default inject('appStore')(observer(Home));
