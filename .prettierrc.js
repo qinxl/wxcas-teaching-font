@@ -2,5 +2,8 @@ module.exports = {
   semi: true,
   jsxSingleQuote: true,
   singleQuote: true,
-  arrowParens: "avoid"
+  arrowParens: 'avoid',
+  printWidth: 1000,
+  proseWrap: 'never',
+  arrowParens: 'avoid',
 };

@@ -1,11 +1,4 @@
-const userInfo = localStorage.getItem('userInfo');
-console.log(JSON.stringify(userInfo));
-
 const SessionUtil = {
-  getUserInfo: () => userInfo,
-  getJobNumber: () => userInfo.jobNumber,
-  getUserId: () => userInfo.id,
-  getRealName: userInfo.realName,
+    getUserInfo: JSON.parse(localStorage.getItem('userInfo')),
 };
-
 export default SessionUtil;

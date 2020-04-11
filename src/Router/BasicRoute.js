@@ -1,24 +1,19 @@
 import React from 'react';
 import AuthRoute from './AuthRoute';
-import {
-  HashRouter as Router,
-  Switch,
-  Redirect,
-  Route,
-} from 'react-router-dom';
+import { HashRouter as Router, Switch, Redirect, Route } from 'react-router-dom';
 import { Login, Home, Admin } from '../containers';
 
-function BasicRouter() {
+function BasicRoute() {
   return (
     <Router>
       <Switch>
         <Route path='/login' component={Login}></Route>
         <AuthRoute path='/admin' component={Admin}></AuthRoute>
-        <AuthRoute path='/home' component={Home} abc={1}></AuthRoute>
-        <Redirect to='/login'></Redirect>
+        <AuthRoute path='/home' component={Home}></AuthRoute>
+        <Redirect to='/home'></Redirect>
       </Switch>
     </Router>
   );
 }
 
-export default BasicRouter;
+export default BasicRoute;
