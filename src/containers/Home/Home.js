@@ -26,7 +26,7 @@ function Home({ appStore }) {
       okText: '确认',
       cancelText: '取消',
       onOk: () => {
-        localStorage.clear();
+        SessionUtil.clearSession();
         history.push('/login');
       },
     });

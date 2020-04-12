@@ -7,7 +7,7 @@ function AuthRoute({ component: Component, path }) {
     <Route
       path={path}
       render={props => {
-        return SessionUtil.getUserInfo ? <Component {...props} /> : <Redirect to='/login' />;
+        return SessionUtil.getUserInfo() ? <Component {...props} /> : <Redirect to='/login' />;
       }}
     />
   );

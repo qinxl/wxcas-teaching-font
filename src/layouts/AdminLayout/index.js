@@ -8,15 +8,15 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 const history = createHashHistory();
 
-function AdminLayout(props) {
+function AdminLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const [menus] = useState([
     {
       key: 1,
       title: '用户管理',
       children: [
-        { key: 4, title: '教师用户' },
-        { key: 5, title: '学生用户' },
+        { key: 4, title: '教师用户', href: '/admin/teacher' },
+        { key: 5, title: '学生用户', href: '/admin/student' },
       ],
     },
     {
@@ -42,11 +42,11 @@ function AdminLayout(props) {
         <Menu theme='dark' mode='inline'>
           <Menu.Item onClick={() => history.push('/home')}>
             <HomeOutlined />
-            首页
+            返回主页
           </Menu.Item>
           <Menu.Item onClick={() => history.push('/admin/welcome')}>
             <HomeOutlined />
-            仪表板
+            欢迎页
           </Menu.Item>
           {menus.map(menu => {
             return (
@@ -60,7 +60,16 @@ function AdminLayout(props) {
                 }
               >
                 {menu.children.map(sub => {
-                  return <Menu.Item key={sub.key}>{sub.title}</Menu.Item>;
+                  return (
+                    <Menu.Item
+                      key={sub.key}
+                      onClick={() => {
+                        history.push(sub.href);
+                      }}
+                    >
+                      {sub.title}
+                    </Menu.Item>
+                  );
                 })}
               </SubMenu>
             );
@@ -69,7 +78,7 @@ function AdminLayout(props) {
       </Sider>
       <Layout className='site-layout'>
         <Header className='site-layout-background' style={{ padding: 0 }} />
-        <Content style={{ margin: '0 16px' }}>{props.children}</Content>
+        <Content style={{ margin: '0 16px' }}>{children}</Content>
         <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
       </Layout>
     </Layout>
