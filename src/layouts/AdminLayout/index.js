@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { createHashHistory } from 'history';
-import { MenuOutlined } from '@ant-design/icons';
+import { SessionUtil } from '../../utils';
+import { MenuOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import './style.css';
 
 const { SubMenu } = Menu;
-const { Header, Content, Sider, Footer } = Layout;
+const { Content, Sider, Header } = Layout;
 const history = createHashHistory();
 
 function AdminLayout({ children, authList }) {
-  const [collapsed, setCollapsed] = useState(false);
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
+      <Sider>
         <div className='logo'>教学辅助系统</div>
         <Menu theme='dark' mode='inline'>
           <Menu.Item onClick={() => history.push('/admin/welcome')}>
@@ -58,8 +58,8 @@ function AdminLayout({ children, authList }) {
         </Menu>
       </Sider>
       <Layout className='site-layout'>
-        <div className='container_header'>超级管理员</div>
-        <Content style={{ margin: '0' }}>
+        <div className='container_header'>{SessionUtil.getUserInfo().realName}</div>
+        <Content style={{ margin: '0', backgroundColor: '#ffffff' }}>
           <div className='site-layout-content'>{children}</div>
         </Content>
       </Layout>

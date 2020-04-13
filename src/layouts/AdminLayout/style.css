@@ -14,7 +14,8 @@
 }
 
 .site-layout .site-layout-background {
-  background: #ffffff88;
+  background: #ffffff;
+  border-bottom: solid 1px #dddddd;
 }
 .container_header {
   height: 60px;
@@ -25,3 +26,4 @@
   background-color: #fff;
   border-bottom: solid 1px #dddddd;
 }
+

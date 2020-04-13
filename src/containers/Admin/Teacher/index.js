@@ -1,33 +1,87 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Space, Select } from 'antd';
+import { Modal, Table, Space, Select, Input, Button } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
+const { confirm } = Modal;
 
 function Teacher() {
   const [teacherList, setTeacherList] = useState([]);
+
+  const removeHandler = data => {
+    confirm({
+      title: '确认删除 ' + data.realName + ' ？',
+      icon: <ExclamationCircleOutlined />,
+      okText: '确认',
+      cancelText: '取消',
+      onOk: () => {
+        console.log(teacherList.indexOf(data));
+        teacherList.splice(teacherList.indexOf(data), 1);
+        console.log(teacherList.length);
+        setTeacherList(teacherList);
+      },
+    });
+  };
+
   const columns = [
     { title: '教师姓名', dataIndex: 'realName', align: 'center' },
     { title: '教师工号', dataIndex: 'jobNumber', align: 'center' },
     { title: '性别', dataIndex: 'sex', align: 'center' },
     { title: '状态', dataIndex: 'statu', align: 'center' },
+    {
+      title: '操作',
+      align: 'center',
+      width: '120px',
+      render: (text, record) => {
+        return (
+          <Space>
+            <Button type='primary' size='small'>
+              重置密码
+            </Button>
+            <Button
+              type='danger'
+              size='small'
+              onClick={() => {
+                removeHandler(record);
+              }}
+            >
+              删除
+            </Button>
+          </Space>
+        );
+      },
+    },
   ];
   useEffect(() => {
-    setTeacherList([
-      { id: '1', realName: '秦兴龙1', jobNumber: '000000', sex: '男', statu: '正常' },
-      { id: '2', realName: '秦兴龙2', jobNumber: '000000', sex: '男', statu: '正常' },
-      { id: '3', realName: '秦兴龙3', jobNumber: '000000', sex: '男', statu: '正常' },
-      { id: '4', realName: '秦兴龙4', jobNumber: '000000', sex: '男', statu: '正常' },
-      { id: '5', realName: '秦兴龙5', jobNumber: '000000', sex: '男', statu: '正常' },
-    ]);
+    let list = [];
+    for (let i = 1; i < 105; i++) {
+      list.push({ id: i, realName: '秦兴龙' + i, jobNumber: i, sex: i % 2 === 0 ? '男' : '女', statu: '正常' });
+    }
+    setTeacherList(list);
   }, []);
+  const tableOptions = {
+    columns: columns,
+    dataSource: teacherList,
+    rowSelection: { fixed: true },
+    bordered: true,
+    size: 'small',
+    rowKey: 'id',
+    pagination: { showSizeChanger: false },
+    style: { marginTop: '20px' },
+  };
   return (
     <div>
-      <Select style={{ width: 200 }} placeholder='选择专业'>
-        <Option value='jack'>Jack</Option>
-        <Option value='lucy'>Lucy</Option>
-        <Option value='tom'>Tom</Option>
-      </Select>
-      <Table columns={columns} dataSource={teacherList} rowSelection={{ fixed: true }} bordered size='small' rowKey='id' style={{ width: '100%' }} />
+      <Space>
+        <Select style={{ width: 200 }} placeholder='选择专业'>
+          <Option value='jack'>Jack</Option>
+          <Option value='lucy'>Lucy</Option>
+          <Option value='tom'>Tom</Option>
+        </Select>
+        <Input style={{ width: 200 }} />
+        <Button type='primary'>查询</Button>
+        <Button type='default'>重置</Button>
+      </Space>
+      <Table {...tableOptions} />
     </div>
   );
 }
