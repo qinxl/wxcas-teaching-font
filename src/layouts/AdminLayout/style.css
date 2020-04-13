@@ -7,6 +7,21 @@
   font-size: 16px;
 }
 
+.site-layout-content {
+  background: #fff;
+  padding: 24px;
+  height: 100%;
+}
+
 .site-layout .site-layout-background {
   background: #ffffff88;
+}
+.container_header {
+  height: 60px;
+  width: 100%;
+  line-height: 60px;
+  text-align: right;
+  padding-right: 15px;
+  background-color: #fff;
+  border-bottom: solid 1px #dddddd;
 }

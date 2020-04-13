@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createHashHistory } from 'history';
 import { Button, Modal, Row, Col, Space, Card } from 'antd';
 import { observer, inject } from 'mobx-react';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { SessionUtil } from '../../utils/index';
+import axios from '../../utils/Axios';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import UserDefaultIcon from '../../assets/images/user-default.png';
 import './style.css';
 
 const { confirm } = Modal;
 const history = createHashHistory();
+const appIconUrl = 'http://112.35.48.176:8180/uccenter/app/';
 
 /**
  * 渲染函数
@@ -17,6 +19,14 @@ function Home({ appStore }) {
   const [userInfoModalVisible, setUserInfoModalVisible] = useState(false);
   const [modifyPwdModalVisible, setModifyPwdModalVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+
+  //   加载应用信息
+  useEffect(() => {
+    axios.post('app/selectAppListOfAll', {}, data => {
+      appStore.setAppList(data.data);
+    });
+  }, []);
+
   // 退出系统
   const quitHandler = () => {
     confirm({
@@ -42,6 +52,7 @@ function Home({ appStore }) {
     setModifyPwdModalVisible(true);
   };
 
+  // 应用列表头部样式
   const appCardHeadStyle = {
     backgroundColor: '#f6f6f6',
     color: '#000',
@@ -90,15 +101,15 @@ function Home({ appStore }) {
                           <div
                             className='sysitem'
                             onClick={() => {
-                              history.push(app.href);
+                              window.open('#' + app.appUrl + '/' + app.id, app.appUrl);
                             }}
                           >
                             <div className='sysicon'>
                               <div className='sysimgwrap'>
-                                <img src={app.icon} alt={app.label} className='sysimg' />
+                                <img src={appIconUrl + app.icon} alt={app.appName} className='sysimg' />
                               </div>
                             </div>
-                            <div className='systitle'>{app.label}</div>
+                            <div className='systitle'>{app.appName}</div>
                           </div>
                         </Col>
                       );
@@ -115,13 +126,18 @@ function Home({ appStore }) {
                     {appStore.teachingAppList.map(app => {
                       return (
                         <Col span={3} key={app.id}>
-                          <div className='sysitem'>
+                          <div
+                            className='sysitem'
+                            onClick={() => {
+                              history.push(app.appUrl);
+                            }}
+                          >
                             <div className='sysicon'>
                               <div className='sysimgwrap'>
-                                <img src={app.icon} alt={app.label} className='sysimg' />
+                                <img src={appIconUrl + app.icon} alt={app.appName} className='sysimg' />
                               </div>
                             </div>
-                            <div className='systitle'>{app.label}</div>
+                            <div className='systitle'>{app.appName}</div>
                           </div>
                         </Col>
                       );
