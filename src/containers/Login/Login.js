@@ -1,8 +1,8 @@
 import React from 'react';
-import { createHashHistory } from 'history';
-import { Form, Input, Button, Card, message } from 'antd';
-import './style.css';
 import { SessionUtil } from '../../utils';
+import { Form, Input, Button, Card, message } from 'antd';
+import { withRouter } from 'react-router-dom';
+import './style.css';
 
 const userNameRules = [
   { required: true, message: '请输入用户名' },
@@ -13,8 +13,7 @@ const pwdRules = [
   { whitespace: true, message: '请输入密码' },
 ];
 
-function Login() {
-  const history = createHashHistory();
+function Login({ history }) {
   const onFinish = values => {
     const { username, password } = values;
     if (username === 'qinxl' && password === '123456') {
@@ -44,12 +43,11 @@ function Login() {
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 5, span: 19 }}>
           <Button type='primary' htmlType='submit' block>
-            {' '}
-            登录{' '}
+            登录
           </Button>
         </Form.Item>
       </Form>
     </Card>
   );
 }
-export default Login;
+export default withRouter(Login);

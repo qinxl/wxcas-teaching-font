@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../utils/Axios';
 import { AdminLayout } from '../../layouts';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { Welcome, Teacher, Student } from '.';
+import AdminRoute from '../../router/AdminRoute';
 
 function Admin() {
   const [authList, setAuthList] = useState([]);
@@ -18,12 +17,7 @@ function Admin() {
   }, []);
   return (
     <AdminLayout authList={authList}>
-      <Switch>
-        <Route path='/admin/welcome' exact={true} component={Welcome}></Route>
-        <Route path='/admin/teacher' exact={true} component={Teacher}></Route>
-        <Route path='/admin/student' exact={true} component={Student}></Route>
-        <Redirect to='/admin/welcome'></Redirect>
-      </Switch>
+      <AdminRoute />
     </AdminLayout>
   );
 }

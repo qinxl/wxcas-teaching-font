@@ -15,9 +15,7 @@ function Teacher() {
       okText: '确认',
       cancelText: '取消',
       onOk: () => {
-        console.log(teacherList.indexOf(data));
         teacherList.splice(teacherList.indexOf(data), 1);
-        console.log(teacherList.length);
         setTeacherList(teacherList);
       },
     });

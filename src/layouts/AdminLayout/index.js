@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { createHashHistory } from 'history';
+import React from 'react';
+import { Layout, Menu } from 'antd';
 import { SessionUtil } from '../../utils';
-import { MenuOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { MenuOutlined } from '@ant-design/icons';
 import './style.css';
+import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 
 const { SubMenu } = Menu;
-const { Content, Sider, Header } = Layout;
-const history = createHashHistory();
+const { Content, Sider } = Layout;
 
 function AdminLayout({ children, authList }) {
   return (
@@ -15,9 +15,11 @@ function AdminLayout({ children, authList }) {
       <Sider>
         <div className='logo'>教学辅助系统</div>
         <Menu theme='dark' mode='inline'>
-          <Menu.Item onClick={() => history.push('/admin/welcome')}>
-            <MenuOutlined />
-            欢迎页
+          <Menu.Item>
+            <Link to='/admin/welcome'>
+              <MenuOutlined />
+              欢迎页
+            </Link>
           </Menu.Item>
           {authList &&
             authList.length > 0 &&
@@ -41,13 +43,8 @@ function AdminLayout({ children, authList }) {
                   >
                     {auth.children.map(sub => {
                       return (
-                        <Menu.Item
-                          key={sub.id}
-                          onClick={() => {
-                            history.push(sub.authUrl);
-                          }}
-                        >
-                          {sub.authName}
+                        <Menu.Item key={sub.id}>
+                          <Link to={sub.authUrl}>{sub.authName}</Link>
                         </Menu.Item>
                       );
                     })}

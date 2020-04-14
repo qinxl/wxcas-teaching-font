@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { createHashHistory } from 'history';
+import './style.css';
 import { Button, Modal, Row, Col, Space, Card } from 'antd';
-import { observer, inject } from 'mobx-react';
 import { SessionUtil } from '../../utils/index';
 import axios from '../../utils/Axios';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import UserDefaultIcon from '../../assets/images/user-default.png';
-import './style.css';
+
+import { withRouter, Link } from 'react-router-dom';
 
 const { confirm } = Modal;
-const history = createHashHistory();
 const appIconUrl = 'http://112.35.48.176:8180/uccenter/app/';
 
 /**
  * 渲染函数
  */
-function Home({ appStore }) {
+function Home({ history }) {
+  const [appList, setAppList] = useState([]);
   const [userInfoModalVisible, setUserInfoModalVisible] = useState(false);
   const [modifyPwdModalVisible, setModifyPwdModalVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -23,7 +23,7 @@ function Home({ appStore }) {
   //   加载应用信息
   useEffect(() => {
     axios.post('app/selectAppListOfAll', {}, data => {
-      appStore.setAppList(data.data);
+      setAppList(data.data);
     });
   }, []);
 
@@ -95,25 +95,24 @@ function Home({ appStore }) {
               <Col span={24}>
                 <Card title='数据管理' bordered={false} headStyle={appCardHeadStyle}>
                   <Row>
-                    {appStore.dataAppList.map(app => {
-                      return (
-                        <Col span={3} key={app.id}>
-                          <div
-                            className='sysitem'
-                            onClick={() => {
-                              window.open('#' + app.appUrl + '/' + app.id, app.appUrl);
-                            }}
-                          >
-                            <div className='sysicon'>
-                              <div className='sysimgwrap'>
-                                <img src={appIconUrl + app.icon} alt={app.appName} className='sysimg' />
+                    {appList
+                      .filter(app => app.type === 0)
+                      .map(app => {
+                        return (
+                          <Col span={3} key={app.id}>
+                            <Link to={app.appUrl} target='_blank'>
+                              <div className='sysitem'>
+                                <div className='sysicon'>
+                                  <div className='sysimgwrap'>
+                                    <img src={appIconUrl + app.icon} alt={app.appName} className='sysimg' />
+                                  </div>
+                                </div>
+                                <div className='systitle'>{app.appName}</div>
                               </div>
-                            </div>
-                            <div className='systitle'>{app.appName}</div>
-                          </div>
-                        </Col>
-                      );
-                    })}
+                            </Link>
+                          </Col>
+                        );
+                      })}
                   </Row>
                 </Card>
               </Col>
@@ -123,25 +122,24 @@ function Home({ appStore }) {
               <Col span={24}>
                 <Card title='教学辅助' bordered={false} headStyle={appCardHeadStyle}>
                   <Row>
-                    {appStore.teachingAppList.map(app => {
-                      return (
-                        <Col span={3} key={app.id}>
-                          <div
-                            className='sysitem'
-                            onClick={() => {
-                              history.push(app.appUrl);
-                            }}
-                          >
-                            <div className='sysicon'>
-                              <div className='sysimgwrap'>
-                                <img src={appIconUrl + app.icon} alt={app.appName} className='sysimg' />
+                    {appList
+                      .filter(app => app.type === 1)
+                      .map(app => {
+                        return (
+                          <Col span={3} key={app.id}>
+                            <Link to={app.appUrl} target='_blank'>
+                              <div className='sysitem'>
+                                <div className='sysicon'>
+                                  <div className='sysimgwrap'>
+                                    <img src={appIconUrl + app.icon} alt={app.appName} className='sysimg' />
+                                  </div>
+                                </div>
+                                <div className='systitle'>{app.appName}</div>
                               </div>
-                            </div>
-                            <div className='systitle'>{app.appName}</div>
-                          </div>
-                        </Col>
-                      );
-                    })}
+                            </Link>
+                          </Col>
+                        );
+                      })}
                   </Row>
                 </Card>
               </Col>
@@ -193,4 +191,4 @@ function Home({ appStore }) {
     </div>
   );
 }
-export default inject('appStore')(observer(Home));
+export default withRouter(Home);
