@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import { Button, Modal, Row, Col, Space, Card } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { withRouter, Link } from 'react-router-dom';
+
 import { SessionUtil } from '../../utils/index';
 import axios from '../../utils/Axios';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 import UserDefaultIcon from '../../assets/images/user-default.png';
-
-import { withRouter, Link } from 'react-router-dom';
 
 const { confirm } = Modal;
 const appIconUrl = 'http://112.35.48.176:8180/uccenter/app/';

@@ -6,4 +6,4 @@ module.exports = {
   printWidth: 1000,
   proseWrap: 'never',
   arrowParens: 'avoid',
-};
+}

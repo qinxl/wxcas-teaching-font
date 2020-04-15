@@ -1,10 +1,11 @@
 import React from 'react';
+import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+
+import { Admin, Assist, Home, Login, Outline, Paper, Score } from '../containers';
+
 import AuthRoute from './AuthRoute';
-import { BrowserRouter as Router, Switch, Redirect, Route } from 'react-router-dom';
-import { Login, Home, Admin, Outline, Paper, Assist, Score } from '../containers';
 
 function BasicRoute(props) {
-  console.log(props);
   return (
     <Router>
       <Switch>

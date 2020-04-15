@@ -1,10 +1,11 @@
 import React from 'react';
+import { Redirect, Switch } from 'react-router-dom';
+
+import { Auth, Student, Teacher, Welcome } from '../containers/Admin';
+
 import AuthRoute from './AuthRoute';
-import { Switch, Redirect } from 'react-router-dom';
-import { Welcome, Teacher, Student, Auth } from '../containers/Admin';
 
 function AdminRoute(props) {
-  console.log(props);
   const parentUrl = '/admin';
   return (
     <Switch>

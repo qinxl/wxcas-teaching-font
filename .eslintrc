@@ -1,0 +1,16 @@
+{
+  "extends": ["react-app", "eslint:recommended"],
+  "plugins": ["prettier", "import"],
+  "rules": {
+    "no-var": 2,
+    "import/first": 2,
+    "import/order": [
+      2,
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always"
+      }
+    ],
+    "linebreak-style": ["error", "windows"]
+  }
+}

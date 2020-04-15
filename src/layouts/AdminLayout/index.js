@@ -1,10 +1,10 @@
+import { Link } from 'react-router-dom';
+import { MenuOutlined } from '@ant-design/icons';
 import React from 'react';
 import { Layout, Menu } from 'antd';
+
 import { SessionUtil } from '../../utils';
-import { MenuOutlined } from '@ant-design/icons';
 import './style.css';
-import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;

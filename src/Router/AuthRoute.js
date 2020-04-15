@@ -1,9 +1,9 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
+
 import { SessionUtil } from '../utils';
 
 function AuthRoute({ component: Component, path }) {
-  console.log(path);
   return (
     <Route
       path={path}
